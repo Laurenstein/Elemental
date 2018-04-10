@@ -13,7 +13,9 @@ namespace Elemental
         SpriteBatch spriteBatch;
         Texture2D texture;
         Vector2 position;
+        Vector2 speed;
         Button tlacitko;
+        Vector2 acceleration;
         int width = 50;
         int height = 50;
 
@@ -36,6 +38,8 @@ namespace Elemental
             // TODO: Add your initialization logic here
 
             position = new Vector2(1, 350);
+            speed = new Vector2(0, 0);
+            acceleration = new Vector2(0,0.5f);
             texture = new Texture2D(this.GraphicsDevice, width, height);
             Color[] square = new Color[width * height];
 
@@ -88,16 +92,38 @@ namespace Elemental
                 Exit();
 
             if (state.IsKeyDown(Keys.Right))
-                position.X += 2;
+                speed.X = 10;
             if (state.IsKeyDown(Keys.Left))
-                position.X -= 2;
+                speed.X = -10;
             if (state.IsKeyDown(Keys.Up))
-                position.Y -= 2;
+            {
+                if (position.Y == 350)
+                {
+                    speed = new Vector2(0, -10);
+                }
+
+            }
+
             if (state.IsKeyDown(Keys.Down))
-                position.Y += 0;
+                speed.Y = 20;
+
+
             // TODO: Add your update logic here
 
+            
+            
+            position = position + speed;
+            speed = speed + acceleration;
+
+            if (position.Y >= 350)
+            {
+                speed = new Vector2(0, 0);
+                position.Y = 350;
+            }
+                
+            
             base.Update(gameTime);
+
         }
 
         /// <summary>
