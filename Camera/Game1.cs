@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Elemental
+namespace Camera
 {
     /// <summary>
     /// This is the main type for your game.
@@ -10,14 +10,9 @@ namespace Elemental
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D texture;
-        Vector2 position;
-        Vector2 speed;
-        Button tlacitko;
-        Vector2 acceleration;
-        int width = 50;
-        int height = 50;
+        static SpriteBatch spriteBatch;
+
+        Camera camera;
 
         public Game1()
         {
@@ -37,25 +32,19 @@ namespace Elemental
         {
             // TODO: Add your initialization logic here
 
-            position = new Vector2(1, 350);
-            speed = new Vector2(0, 0);
-            acceleration = new Vector2(0,0.5f);
-            texture = new Texture2D(GraphicsDevice, width, height);
-            Color[] square = new Color[width * height];
+            camera = new Camera();
 
-            // naplníme square barvou
-
-            tlacitko = new Button(new Vector2(10, 10), 10, 10, Color.AntiqueWhite, GraphicsDevice);
-
-            for (int i = 1; i < square.Length; i++)
+            //for (int i = 0; i < 10; i++)
+            for (int j = 0; j < 10; j++)
             {
-                square[i] = Color.Khaki;
+                for (int i = 0; i < 10; i++)
+                    {
+                    new GameObject(new Vector2(10+j*30, 10+i*30), 20, 20, GraphicsDevice);
+                    }
             }
 
-            texture.SetData(square);
             base.Initialize();
         }
-
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -65,8 +54,6 @@ namespace Elemental
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-           // tlacitko.texture = Content.Load<Texture2D>("texture");
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,43 +74,18 @@ namespace Elemental
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Right))
-                speed.X = 10;
+                camera.position += new Vector2(10, 0);
             if (state.IsKeyDown(Keys.Left))
-                speed.X = -10;
-            if (state.IsKeyDown(Keys.Up))
-            {
-                if (position.Y == 350)
-                {
-                    speed = new Vector2(0, -10);
-                }
-
-            }
-
-            if (state.IsKeyDown(Keys.Down))
-                speed.Y = 20;
-
+                camera.position += new Vector2(-10, 0); ;
 
             // TODO: Add your update logic here
 
-            
-            
-            position = position + speed;
-            speed = speed + acceleration;
-
-            if (position.Y >= 350)
-            {
-                speed = new Vector2(0, 0);
-                position.Y = 350;
-            }
-                
-            
             base.Update(gameTime);
-
         }
 
         /// <summary>
@@ -132,18 +94,20 @@ namespace Elemental
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-
-            GraphicsDevice.Clear(Color.DarkSlateGray);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
 
-            
-
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, position);
-            spriteBatch.Draw(tlacitko.texture, tlacitko.position);
+
+            for (int i = 0; i < GameObject.allObjects.Count; i++)
+            {
+                GameObject.allObjects[i].Draw(spriteBatch, camera.position);
+            }
+
             spriteBatch.End();
 
+            
             base.Draw(gameTime);
         }
     }
