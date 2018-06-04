@@ -11,6 +11,8 @@ namespace Camera
     {
         GraphicsDeviceManager graphics;
         static SpriteBatch spriteBatch;
+        Vector2 speed;
+        Vector2 acceleration;
 
         Camera camera;
 
@@ -33,15 +35,31 @@ namespace Camera
             // TODO: Add your initialization logic here
 
             camera = new Camera();
+            speed = new Vector2(0, 0);
+            acceleration = new Vector2(0, 0.8f);
 
             //for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 10; j++)
+            //for (int j = 0; j < 10; j++)
+            //{
+            //    for (int i = 0; i < 10; i++)
+            //        {
+            //        new GameObject(new Vector2(10+j*30, 10+i*30), 20, 20, GraphicsDevice);
+            //        }
+            //}
+            for (int i = 0; i < 50; i++)
             {
-                for (int i = 0; i < 10; i++)
-                    {
-                    new GameObject(new Vector2(10+j*30, 10+i*30), 20, 20, GraphicsDevice);
-                    }
+                new GameObject(new Vector2(0+i*20, 380), 20, 20, GraphicsDevice);
             }
+            for (int i = 0; i < 5; i++)
+            {
+                new GameObject(new Vector2(250 + i * 20, 300), 20, 20, GraphicsDevice);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                new GameObject(new Vector2(490 + i * 20, 250), 20, 20, GraphicsDevice);
+            }
+
+
 
             base.Initialize();
         }
@@ -79,11 +97,41 @@ namespace Camera
 
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Right))
-                camera.position += new Vector2(10, 0);
+            {
+
+                //camera.position += new Vector2(10, 0);
+                speed.X = 5;
+               
+            }
             if (state.IsKeyDown(Keys.Left))
-                camera.position += new Vector2(-10, 0); ;
+            {
+                //camera.position += new Vector2(-10, 0);
+                speed.X = -5;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                //camera.position += new Vector2(0, -10);
+                if (camera.position.Y == 380)
+                {
+                    speed = new Vector2(0, -5);
+                }
+            }
+            if (state.IsKeyDown(Keys.Down))
+            {
+                //camera.position += new Vector2(0, 10);
+                speed.Y = 5;
+            }
+
+            if (camera.position.Y >= 380)
+            {
+                speed = new Vector2(0, 0);
+                camera.position.Y = 360;
+            }
+            camera.position = camera.position + speed;
+            speed = speed + acceleration;
 
             // TODO: Add your update logic here
+
 
             base.Update(gameTime);
         }
