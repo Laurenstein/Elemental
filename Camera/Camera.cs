@@ -10,6 +10,25 @@ namespace Camera
     class Camera
     {
 
-        public Vector2 position = new Vector2(0, 0);
+
+        int width, height;
+
+        Vector2 absolutePosition = new Vector2(0, 0);
+
+        public Vector2 position { get { return absolutePosition - new Vector2(width / 2, height / 2); }    }
+
+        public Camera(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+        }
+
+        public void setPosition(Vector2 newAbsolute)
+        {
+            absolutePosition = newAbsolute;
+        }
+        
     }
+        
+    
 }

@@ -40,7 +40,7 @@ namespace Camera
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition)
         {
-            spriteBatch.Draw(texture, position-cameraPosition);
+            spriteBatch.Draw(texture, position - cameraPosition);
 
         }
 
