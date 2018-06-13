@@ -15,7 +15,8 @@ namespace Camera
         int hp;
         int element;
         float speed;
-        Vector2 gravity = new Vector2(0,0.8f);
+        float start_jump = 0;
+        Vector2 acceleration = new Vector2(0,0.9f);
 
         public Player(Vector2 position, int height, int width, int hp, float speed, int element, GraphicsDevice graphics) : 
             base(position, height,width, graphics)
@@ -38,10 +39,20 @@ namespace Camera
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                position = position + new Vector2(0, -speed);
+
+                start_jump = position.Y;
+                position = new Vector2(position.X, start_jump) + new Vector2(0, -speed);
+                
+                
             }
-            // opravit speed a akceleraci
-            position = position + new Vector2(0, gravity);
+            // opravit speed a akceleracii
+            position = position + acceleration;
+
+            // Player nespadne z podlahy
+            if (position.Y > 360)
+            {
+                position.Y = 360;
+            }
             //if (state.IsKeyDown(Keys.Right))
 
             //camera.setPosition(speed);
