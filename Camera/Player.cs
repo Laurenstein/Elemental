@@ -14,49 +14,81 @@ namespace Camera
 
         int hp;
         int element;
-        float speed;
-        float start_jump = 0;
-        Vector2 acceleration = new Vector2(0,0.9f);
+        Vector2 speed = new Vector2(0,0);
+        Vector2 acceleration = new Vector2(0,1);
 
-        public Player(Vector2 position, int height, int width, int hp, float speed, int element, GraphicsDevice graphics) : 
+        public Player(Vector2 position, int height, int width, int hp, int element, GraphicsDevice graphics) : 
             base(position, height,width, graphics)
         {
             this.hp = 100;
             this.element = 1;
-            this.speed = speed;
         }
 
         public void Update()
         {
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Right))
-            {
-                position = position + new Vector2(speed, 0);
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                position = position + new Vector2(-speed, 0);
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
 
-                start_jump = position.Y;
-                position = new Vector2(position.X, start_jump) + new Vector2(0, -speed);
-                
-                
-            }
-            // opravit speed a akceleracii
-            position = position + acceleration;
+            if (isStanding())
+            {
+                if (state.IsKeyDown(Keys.Up))
+                {
+                   speed.Y -= 20;
 
-            // Player nespadne z podlahy
+                }
+                if (state.IsKeyDown(Keys.Right))
+                {
+
+                    speed.X = 5;
+                }
+                else if (state.IsKeyDown(Keys.Left))
+                {
+                    speed.X = -5;
+                } else
+                {
+                    speed.X = 0;
+                }
+            } else
+            {
+                speed += acceleration;
+
+            }
+
+
+
+            position += speed;
+            
+
+            // Player nespadne z podlahy - bug na začátku skoku
             if (position.Y > 360)
             {
                 position.Y = 360;
             }
+
+            
             //if (state.IsKeyDown(Keys.Right))
 
             //camera.setPosition(speed);
             //speed = speed + acceleration;
         }
+        public Boolean isStanding()
+        {
+            if (position.Y == 360)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }
+
+
+//Kolize
+//    bool DoBoxesIntersect(Box a, Box b)
+//{
+//    return (abs(a.x - b.x) * 2 < (a.width + b.width)) &&
+//           (abs(a.y - b.y) * 2 < (a.height + b.height));
+//}
+
+//https://gamedev.stackexchange.com/questions/586/what-is-the-fastest-way-to-work-out-2d-bounding-box-intersection

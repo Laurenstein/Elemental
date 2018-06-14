@@ -61,7 +61,7 @@ namespace Camera
                 new GameObject(new Vector2(490 + i * 20, 250), 20, 20, GraphicsDevice);
             }
 
-           player = new Player(new Vector2(200, 200), 20, 20, 100, 6, 1, GraphicsDevice);
+           player = new Player(new Vector2(200, 200), 20, 20, 100, 1, GraphicsDevice);
 
 
 
