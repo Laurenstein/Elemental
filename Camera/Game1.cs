@@ -14,7 +14,6 @@ namespace Camera
         Vector2 speed;
         Vector2 acceleration;
         Player player;
-
         Camera camera;
 
         public Game1()

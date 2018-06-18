@@ -49,10 +49,25 @@ namespace Camera
                 }
             } else
             {
+                if (state.IsKeyDown(Keys.Right))
+                {
+
+                    speed.X = 5;
+                    if(state.IsKeyDown(Keys.Left))
+                    {
+
+                        speed.X = -1;
+                    }
+                }
+                else if (state.IsKeyDown(Keys.Left))
+                {
+                    speed.X = -5;
+                }
+
                 speed += acceleration;
 
-            }
 
+            }
 
 
             position += speed;
@@ -64,6 +79,13 @@ namespace Camera
                 position.Y = 360;
             }
 
+
+            //if(isColliding(a,player))
+            //{
+            //    position.Y = něco jako position.kolize
+            //}
+
+ 
             
             //if (state.IsKeyDown(Keys.Right))
 
@@ -72,10 +94,25 @@ namespace Camera
         }
         public Boolean isStanding()
         {
+            //po zprovoznění kolizí se bude ptát, jestli koliduje s něčím, pokud ano, bude stát
             if (position.Y == 360)
             {
                 return true;
             } else
+            {
+                return false;
+            }
+        }
+        // poznámky k téhle podmínce na disku
+
+        public Boolean isColliding(GameObject a, Player player)
+        {
+           if ((Math.Abs(a.position.X - player.position.X) * 2 < (a.width + player.width)) &&
+           (Math.Abs(a.position.Y - player.position.Y) * 2 < (a.height + player.height)))
+                {
+                return true;
+                }
+           else
             {
                 return false;
             }
