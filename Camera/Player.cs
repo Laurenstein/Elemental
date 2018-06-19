@@ -80,6 +80,16 @@ namespace Camera
             }
 
 
+
+            for(int i=0; i< GameObject.allObjects.Count; i++){
+                Console.WriteLine(i);
+                if (isColliding(GameObject.allObjects[i]) && GameObject.allObjects[i] != this)
+                {
+                    position = new Vector2();
+                }
+            }
+
+
             //if(isColliding(a,player))
             //{
             //    position.Y = něco jako position.kolize
@@ -92,7 +102,7 @@ namespace Camera
             //camera.setPosition(speed);
             //speed = speed + acceleration;
         }
-        public Boolean isStanding()
+        public bool isStanding()
         {
             //po zprovoznění kolizí se bude ptát, jestli koliduje s něčím, pokud ano, bude stát
             if (position.Y == 360)
@@ -105,18 +115,6 @@ namespace Camera
         }
         // poznámky k téhle podmínce na disku
 
-        public Boolean isColliding(GameObject a, Player player)
-        {
-           if ((Math.Abs(a.position.X - player.position.X) * 2 < (a.width + player.width)) &&
-           (Math.Abs(a.position.Y - player.position.Y) * 2 < (a.height + player.height)))
-                {
-                return true;
-                }
-           else
-            {
-                return false;
-            }
-        }
     }
 }
 

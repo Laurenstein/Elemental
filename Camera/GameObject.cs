@@ -38,10 +38,36 @@ namespace Camera
 
         }
 
+        public bool isColliding(GameObject a)
+        {
+            if ((Math.Abs(a.position.X - position.X) * 2 < (a.width + width)) &&
+            (Math.Abs(a.position.Y - position.Y) * 2 < (a.height + height)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition)
         {
             spriteBatch.Draw(texture, position - cameraPosition);
 
+        }
+
+
+        static bool isColliding(GameObject a, GameObject b)
+        {
+            if ((Math.Abs(a.position.X - b.position.X) * 2 < (a.width + b.width)) &&
+            (Math.Abs(a.position.Y - b.position.Y) * 2 < (a.height + b.height)))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
 
     }
