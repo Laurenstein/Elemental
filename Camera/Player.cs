@@ -33,15 +33,18 @@ namespace Camera
                 if (state.IsKeyDown(Keys.Up))
                 {
                    speed.Y -= 20;
+                    Console.WriteLine("hop");
 
                 }
                 if (state.IsKeyDown(Keys.Right))
                 {
 
                     speed.X = 5;
+                    Console.WriteLine("jdu");
                 }
                 else if (state.IsKeyDown(Keys.Left))
                 {
+                    Console.WriteLine("jdu");
                     speed.X = -5;
                 } else
                 {
@@ -53,11 +56,7 @@ namespace Camera
                 {
 
                     speed.X = 5;
-                    if(state.IsKeyDown(Keys.Left))
-                    {
-
-                        speed.X = -1;
-                    }
+                    
                 }
                 else if (state.IsKeyDown(Keys.Left))
                 {
@@ -76,16 +75,18 @@ namespace Camera
             // Player nespadne z podlahy - bug na začátku skoku
             if (position.Y > 360)
             {
+
                 position.Y = 360;
             }
 
 
 
-            for(int i=0; i< GameObject.allObjects.Count; i++){
-                Console.WriteLine(i);
+            for (int i = 0; i < GameObject.allObjects.Count; i++)
+            {
                 if (isColliding(GameObject.allObjects[i]) && GameObject.allObjects[i] != this)
                 {
-                    position = new Vector2();
+                    Console.WriteLine("kolize");
+                    speed = new Vector2();
                 }
             }
 
@@ -95,8 +96,8 @@ namespace Camera
             //    position.Y = něco jako position.kolize
             //}
 
- 
-            
+
+
             //if (state.IsKeyDown(Keys.Right))
 
             //camera.setPosition(speed);

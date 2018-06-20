@@ -47,18 +47,18 @@ namespace Camera
             //}
 
             // podlaha
-            for (int i = 0; i < 50; i++)
-            {
-                new GameObject(new Vector2(0+i*20, 380), 20, 20, GraphicsDevice);
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                new GameObject(new Vector2(250 + i * 20, 300), 20, 20, GraphicsDevice);
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                new GameObject(new Vector2(490 + i * 20, 250), 20, 20, GraphicsDevice);
-            }
+            //for (int i = 0; i < 50; i++)
+            //{
+                new GameObject(new Vector2(0, 380), 20, 800, GraphicsDevice);
+            //}
+            //for (int i = 0; i < 5; i++)
+            //{
+                new GameObject(new Vector2(250, 300), 20, 200, GraphicsDevice);
+            //}
+            //for (int i = 0; i < 5; i++)
+            //{
+                new GameObject(new Vector2(490, 250), 20, 200, GraphicsDevice);
+            //}
 
            player = new Player(new Vector2(200, 200), 20, 20, 100, 1, GraphicsDevice);
 
