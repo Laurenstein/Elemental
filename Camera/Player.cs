@@ -33,7 +33,7 @@ namespace Camera
                 if (state.IsKeyDown(Keys.Up))
                 {
                    speed.Y -= 20;
-                    Console.WriteLine("hopp");
+                    Console.WriteLine("hoppp");
 
                 }
                 if (state.IsKeyDown(Keys.Right))
