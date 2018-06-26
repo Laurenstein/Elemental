@@ -49,18 +49,18 @@ namespace Camera
             // podlaha
             //for (int i = 0; i < 50; i++)
             //{
-                new GameObject(new Vector2(0, 380), 20, 800, GraphicsDevice);
+                new GameObject(new Vector2(0, 410), 50, 800, GraphicsDevice);
             //}
             //for (int i = 0; i < 5; i++)
             //{
-                new GameObject(new Vector2(250, 300), 20, 200, GraphicsDevice);
+                new GameObject(new Vector2(250, 250), 50, 200, GraphicsDevice);
             //}
             //for (int i = 0; i < 5; i++)
             //{
-                new GameObject(new Vector2(490, 250), 20, 200, GraphicsDevice);
+                new GameObject(new Vector2(490, 200), 50, 200, GraphicsDevice);
             //}
 
-           player = new Player(new Vector2(200, 200), 20, 20, 100, 1, GraphicsDevice);
+           player = new Player(new Vector2(200, 200), 50, 20, 1, GraphicsDevice);
 
 
 
@@ -118,7 +118,7 @@ namespace Camera
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkSlateGray);
 
             // TODO: Add your drawing code here
 

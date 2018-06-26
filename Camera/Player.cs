@@ -12,15 +12,14 @@ namespace Camera
     class Player : GameObject
     {
 
-        int hp;
         int element;
+        int ground = 360;
         Vector2 speed = new Vector2(0,0);
         Vector2 acceleration = new Vector2(0,1);
 
-        public Player(Vector2 position, int height, int width, int hp, int element, GraphicsDevice graphics) : 
+        public Player(Vector2 position, int height, int width, int element, GraphicsDevice graphics) : 
             base(position, height,width, graphics)
         {
-            this.hp = 100;
             this.element = 1;
         }
 
@@ -33,18 +32,18 @@ namespace Camera
                 if (state.IsKeyDown(Keys.Up))
                 {
                    speed.Y -= 20;
-                    Console.WriteLine("hopppp");
+                    
 
                 }
                 if (state.IsKeyDown(Keys.Right))
                 {
 
                     speed.X = 5;
-                    Console.WriteLine("jdu");
+                    
                 }
                 else if (state.IsKeyDown(Keys.Left))
                 {
-                    Console.WriteLine("jdu");
+                    
                     speed.X = -5;
                 } else
                 {
@@ -70,13 +69,13 @@ namespace Camera
 
 
             position += speed;
-            
+
 
             // Player nespadne z podlahy - bug na začátku skoku
-            if (position.Y > 360)
+            
+            if (isStanding())
             {
-
-                position.Y = 360;
+                speed = new Vector2();
             }
 
 
@@ -85,46 +84,47 @@ namespace Camera
             {
                 if (isColliding(GameObject.allObjects[i]) && GameObject.allObjects[i] != this)
                 {
-                    Console.WriteLine("kolize");
-                    speed = new Vector2();
+                    HandleCollision(GameObject.allObjects[i], speed);
+                    speed = new Vector2(0,1);
+                    
+
                 }
             }
 
 
+
+            // došlo ke kolizi, změna pozice na hodnotu kolize - změna isStanding
             //if(isColliding(a,player))
             //{
             //    position.Y = něco jako position.kolize
             //}
 
 
-
-            //if (state.IsKeyDown(Keys.Right))
-
-            //camera.setPosition(speed);
-            //speed = speed + acceleration;
         }
+        // zjišťuje, jestli player stojí nebo lítá
         public bool isStanding()
         {
-            //po zprovoznění kolizí se bude ptát, jestli koliduje s něčím, pokud ano, bude stát
-            if (position.Y == 360)
+            if (position.Y > ground)
+            {
+
+                position.Y = ground;
+            } 
+            //pokud jsme na podlahu/plošinu dopadli zezhora, hráč se zastaví a funkce vrátí True
+            //if (isColliding())
+            if (position.Y == ground)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
         }
-        // poznámky k téhle podmínce na disku
+
+
+
+
 
     }
 }
 
-
-//Kolize
-//    bool DoBoxesIntersect(Box a, Box b)
-//{
-//    return (abs(a.x - b.x) * 2 < (a.width + b.width)) &&
-//           (abs(a.y - b.y) * 2 < (a.height + b.height));
-//}
-
-//https://gamedev.stackexchange.com/questions/586/what-is-the-fastest-way-to-work-out-2d-bounding-box-intersection

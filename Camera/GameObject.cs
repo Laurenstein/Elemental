@@ -28,7 +28,7 @@ namespace Camera
             Color[] square = new Color[width*height];
             for (int i = 1; i < square.Length; i++)
             {
-                square[i] = Color.Red;
+                square[i] = Color.Gray;
             }
 
            texture.SetData(square);
@@ -37,18 +37,61 @@ namespace Camera
 
 
         }
-
+        // detekce kolize - vrací true nebo false
         public bool isColliding(GameObject a)
         {
-            if ((Math.Abs(a.position.X - position.X) * 2 < (a.width + width)) &&
-            (Math.Abs(a.position.Y - position.Y) * 2 < (a.height + height)))
+            //return !()
+            return !(
+                a.position.X + a.width < position.X ||
+                a.position.X > position.X + width ||
+                a.position.Y + a.height < position.Y ||
+                a.position.Y > position.Y + height
+                );
+        }
+        //vyhazuje z objektu
+        public void HandleCollision(GameObject a, Vector2 speed)
+        {
+            Vector2 B = position; // konečná pozice
+            Vector2 A = B - speed;    // počáteční pozice
+            // c je interpolovaná pozice na okraji
+            // t je interpolovaná hodnota mezi 0,1
+            int cx, cy;
+            float tx, ty, t;
+
+            if (speed.X == 0) tx = 1;
+            // kolize zleva
+            else if (A.X + width <= a.position.X && B.X + width > a.position.X)
             {
-                return true;
+                cx = (int)a.position.X - width;
+                tx = (cx - A.X) / speed.X;
             }
-            else
+            else if (A.X >= a.position.X + a.width && B.X < a.position.X + a.width)
             {
-                return false;
+                cx = (int)a.position.X + a.width;
+                tx = (cx - A.X) / speed.X;
             }
+            else tx = 1;
+
+
+            if (speed.Y == 0) ty = 1;
+            // kolize při pádu (Y)
+            else if (A.Y + height <= a.position.Y && B.Y + height > a.position.Y)
+            {
+                cy = (int)a.position.Y - height;
+                ty = (cy - A.Y) / speed.Y;
+                //isStanding() = true;
+            }
+            // kolize ze spodu (Y)
+            else if (A.Y >= a.position.Y + a.height && B.Y < a.position.Y + a.height)
+            {
+                cy = (int)a.position.Y + a.height;
+                ty = (cy - A.Y) / speed.Y;
+            }
+            else ty = 1;
+
+            t = Math.Min(tx, ty);
+
+            position = A + t * speed;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 cameraPosition)
@@ -56,19 +99,7 @@ namespace Camera
             spriteBatch.Draw(texture, position - cameraPosition);
 
         }
-
-
-        static bool isColliding(GameObject a, GameObject b)
-        {
-            if ((Math.Abs(a.position.X - b.position.X) * 2 < (a.width + b.width)) &&
-            (Math.Abs(a.position.Y - b.position.Y) * 2 < (a.height + b.height)))
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
+        
 
     }
 
