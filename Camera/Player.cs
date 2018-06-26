@@ -72,11 +72,6 @@ namespace Camera
 
 
             // Player nespadne z podlahy - bug na začátku skoku
-            
-            if (isStanding())
-            {
-                speed = new Vector2();
-            }
 
 
 
@@ -85,7 +80,16 @@ namespace Camera
                 if (isColliding(GameObject.allObjects[i]) && GameObject.allObjects[i] != this)
                 {
                     HandleCollision(GameObject.allObjects[i], speed);
-                    speed = new Vector2(0,1);
+
+                    if (isStandingOn(GameObject.allObjects[i]))
+                    {
+                        speed = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        speed = new Vector2(0, 1);
+                    }
+                    
                     
 
                 }
@@ -102,25 +106,38 @@ namespace Camera
 
         }
         // zjišťuje, jestli player stojí nebo lítá
-        public bool isStanding()
+        public bool isStandingOn(GameObject a)
         {
-            if (position.Y > ground)
-            {
 
-                position.Y = ground;
-            } 
-            //pokud jsme na podlahu/plošinu dopadli zezhora, hráč se zastaví a funkce vrátí True
-            //if (isColliding())
-            if (position.Y == ground)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (position.Y + height == a.position.Y)
+            //{ return true; }
+            //else
+            //{ return false; }
+
+            return  position.Y + height == a.position.Y;
         }
 
+
+        public bool isStanding()
+        {
+            for (int i = 0; i < GameObject.allObjects.Count; i++)
+            {
+                if (isColliding(GameObject.allObjects[i]) && GameObject.allObjects[i] != this)
+                {
+                 
+                    if(isStandingOn(GameObject.allObjects[i]))
+                    {
+                        return true;
+                    }
+                    
+
+
+                }
+            }
+            return false;
+
+
+        }
 
 
 

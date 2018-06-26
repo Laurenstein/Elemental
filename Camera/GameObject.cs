@@ -13,8 +13,8 @@ namespace Camera
 
         public static List<GameObject> allObjects = new List<GameObject>();
 
-        int height;
-        int width;
+        public int height;
+        public int width;
         public Vector2 position;
         public Texture2D texture;
 
@@ -79,7 +79,6 @@ namespace Camera
             {
                 cy = (int)a.position.Y - height;
                 ty = (cy - A.Y) / speed.Y;
-                //isStanding() = true;
             }
             // kolize ze spodu (Y)
             else if (A.Y >= a.position.Y + a.height && B.Y < a.position.Y + a.height)
